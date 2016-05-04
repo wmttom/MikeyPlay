@@ -29,7 +29,9 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     self.stopItnuesStatus = false;
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    [_statusItem setImage:[NSImage imageNamed:@"desktop"]];
+    NSImage *image = [NSImage imageNamed:@"desktop"];
+    [image setTemplate:YES];
+    [_statusItem setImage:image];
     [_statusItem setHighlightMode:YES];
     [_statusItem setTarget:self];
     

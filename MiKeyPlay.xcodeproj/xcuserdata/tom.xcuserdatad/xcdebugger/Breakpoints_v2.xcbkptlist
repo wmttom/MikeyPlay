@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiKeyPlay/AppDelegate.m"
-            timestampString = "480179490.371917"
+            timestampString = "484039231.366583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "-saveHotkey:index:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiKeyPlay/AppDelegate.m"
-            timestampString = "480179490.371917"
+            timestampString = "484039231.366583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "-saveHotkey:index:"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiKeyPlay/AppDelegate.m"
-            timestampString = "480179490.371917"
+            timestampString = "484039231.366583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289">
+            startingLineNumber = "291"
+            endingLineNumber = "291">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MiKeyPlay/AppDelegate.m"
-            timestampString = "480179490.371917"
+            timestampString = "484039231.366583"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "-initAboutWindow"
             landmarkType = "5">
          </BreakpointContent>
