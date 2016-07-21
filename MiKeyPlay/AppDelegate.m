@@ -12,6 +12,7 @@
 
 
 @interface AppDelegate ()
+@property (strong)   NSNotificationCenter *  center;
 @property (weak) IBOutlet NSWindow *aboutWindow;
 @property (weak) IBOutlet NSWindow *hotkeyWindow;
 @property (weak) IBOutlet NSTextField *hotkeyTextField1;
@@ -30,6 +31,9 @@
     self.stopItnuesStatus = false;
     _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     NSImage *image = [NSImage imageNamed:@"desktop"];
+    
+    self.center = [[NSWorkspace sharedWorkspace] notificationCenter];
+    
     [image setTemplate:YES];
     [_statusItem setImage:image];
     [_statusItem setHighlightMode:YES];
@@ -68,13 +72,29 @@
     // NSLog(@"runStopItunes");
     NSMenuItem *menuItem = [self.statusItem.menu itemAtIndex:0];
     if (self.stopItnuesStatus) {
-        [self StopStopItunesThread];
+//        [self StopStopItunesThread];
+        [self.center removeObserver: self name:NSWorkspaceDidLaunchApplicationNotification object:nil];
         self.stopItnuesStatus = false;
         menuItem.state = NSOffState;
     } else {
-        [self runStopItunesThread];
+//        [self runStopItunesThread];
+
+        [self.center addObserver:self
+                   selector:@selector(appLaunched:)
+                       name:NSWorkspaceDidLaunchApplicationNotification
+                     object:nil
+         ];
         self.stopItnuesStatus = true;
         menuItem.state = NSOnState;
+    }
+}
+
+- (void)appLaunched:(NSNotification *)note
+{
+    NSString *appName = [[note userInfo] objectForKey:@"NSApplicationName"];
+    if ([appName isEqualToString: @"iTunes"]) {
+        NSLog(@"launched %@\n", [[note userInfo] objectForKey:@"NSApplicationName"]);
+        system("ps -ef | grep iTunes | grep -v grep | awk '{print $2}' | xargs kill");
     }
 }
 
@@ -218,37 +238,37 @@ static void Handle_IOHIDInputValueCallback(
 //}
 
 
-- (void)runStopItunesThread {
-    // NSLog(@"runStopItunesThread");
-    self.stopItunesThread = [[NSThread alloc] initWithTarget:self selector:@selector(run:) object:nil];
-    [self.stopItunesThread start];
-    // NSLog(@"start %hhd", self.stopItunesThread.executing);
-}
-
-- (void)StopStopItunesThread {
-    // NSLog(@"StopStopItunesThread");
-    [self.stopItunesThread cancel];
-    // NSLog(@"cancel %hhd", self.stopItunesThread.executing);
-}
-
-- (void)run:(id)sender {
-    // NSLog(@"run");
-    while (true) {
-        if ([NSThread currentThread].isCancelled) {
-            break;
-        }
-        sleep(0.05);
-        system("ps -ef | grep iTunes | grep -v grep | awk '{print $2}' | xargs kill");
-        //        NSArray *runningApplications = [[NSWorkspace sharedWorkspace] runningApplications];
-        //        for (NSRunningApplication *app in runningApplications) {
-        //            NSString *bundle = [app localizedName];
-        //            if ([bundle isEqualToString:@"iTunes"]) {
-        //                // NSLog(@"iTuens got it");
-        //                system("killall iTunes");
-        //            }
-        //        }
-    }
-}
+//- (void)runStopItunesThread {
+//    // NSLog(@"runStopItunesThread");
+//    self.stopItunesThread = [[NSThread alloc] initWithTarget:self selector:@selector(run:) object:nil];
+//    [self.stopItunesThread start];
+//    // NSLog(@"start %hhd", self.stopItunesThread.executing);
+//}
+//
+//- (void)StopStopItunesThread {
+//    // NSLog(@"StopStopItunesThread");
+//    [self.stopItunesThread cancel];
+//    // NSLog(@"cancel %hhd", self.stopItunesThread.executing);
+//}
+//
+//- (void)run:(id)sender {
+//    // NSLog(@"run");
+//    while (true) {
+//        if ([NSThread currentThread].isCancelled) {
+//            break;
+//        }
+//        sleep(0.05);
+//        system("ps -ef | grep iTunes | grep -v grep | awk '{print $2}' | xargs kill");
+//        //        NSArray *runningApplications = [[NSWorkspace sharedWorkspace] runningApplications];
+//        //        for (NSRunningApplication *app in runningApplications) {
+//        //            NSString *bundle = [app localizedName];
+//        //            if ([bundle isEqualToString:@"iTunes"]) {
+//        //                // NSLog(@"iTuens got it");
+//        //                system("killall iTunes");
+//        //            }
+//        //        }
+//    }
+//}
 
 - (IBAction)hotkeyTextAction1:(id)sender {
     [self saveHotkey:(PRLHotKey *)[self.hotkeyTextField1 objectValue] index:1];
